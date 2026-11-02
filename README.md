@@ -47,10 +47,43 @@ Desarrollar una tienda online dinámica consumiendo una API externa (`DummyJSON 
 
 ---
 
-## 🔀 Flujo de Trabajo Correcto en Git y GitHub
-
+🔀 Flujo de trabajo correcto en Git y GitHub
 Para trabajar de forma colaborativa, organizada y evitar conflictos o pisar el código de los demás, el equipo sigue obligatoriamente este flujo:
 
-1. **Actualizar la rama principal (`main`) antes de arrancar:**
+Actualizar la rama principal (main) antes de arrancar:
+
+Bash
+git checkout main && git pull origin main
+Crear una rama independiente para tu tarea (prohibido programar directo en main):
+
+Bash
+git checkout -b feature/nombre-de-la-tarea
+Guardar cambios con commits atómicos y descriptivos:
+
+Bash
+git add .
+git commit -m "feat: descripción clara de lo que hiciste"
+Subir tu rama al repositorio remoto:
+
+Bash
+git push origin feature/nombre-de-la-tarea
+Integración: Ir a GitHub, abrir un Pull Request hacia main y esperar la revisión cruzada de un compañero antes de fusionarlo.
+
+## 🚀 Instrucciones de Instalación y Ejecución Local
+1. **Clonar el repositorio:**
    ```bash
-   git checkout main && git pull origin main
+   git clone https://github.com/tu-usuario/tu-repositorio-integrador.git
+   ```
+2. **Entrar al directorio del proyecto:**
+   ```bash
+   cd nombre-del-repositorio
+   ```
+3. **Instalar las dependencias:**
+   ```bash
+   npm install
+   ```
+4. **Ejecutar el servidor de desarrollo:**
+   ```bash
+   ng serve
+   ```
+5. **Abrir en el navegador:** Ingresá a `http://localhost:4200/`.
