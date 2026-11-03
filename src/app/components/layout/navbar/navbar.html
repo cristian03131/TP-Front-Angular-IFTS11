@@ -1,0 +1,16 @@
+<nav class="navbar" aria-label="Navegación principal">
+  <ul class="navbar__list">
+    @for (link of links; track link.path) {
+      <li class="navbar__item">
+        <a
+          class="navbar__link"
+          [routerLink]="link.path"
+          routerLinkActive="navbar__link--active"
+          [routerLinkActiveOptions]="{ exact: link.path === '/' }"
+        >
+          {{ link.label }}
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
