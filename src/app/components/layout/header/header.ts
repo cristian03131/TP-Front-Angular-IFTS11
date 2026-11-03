@@ -10,5 +10,6 @@ import { Navbar } from '../navbar/navbar';
   styleUrl: './header.css',
 })
 export class Header {
+  /** Texto de la marca que se muestra junto al logo. */
   protected readonly title = 'TP Front Angular';
 }
