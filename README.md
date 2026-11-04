@@ -9,7 +9,7 @@ Aplicación web desarrollada como Trabajo Práctico Integrador para la materia d
 * **Cristian Manuel Landeira**
 * Álvaro Álvarez Porcel
 * Rodrigo Alejandro Darena
-* *(Quinto integrante)*
+* Jhon Escalante 
 
 ---
 
