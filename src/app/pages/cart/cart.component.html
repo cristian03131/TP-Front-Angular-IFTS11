@@ -1,0 +1,49 @@
+<div class="cart-container">
+  <h2>🛒 Tu Carrito de Compras</h2>
+
+  @if (cartService.cartItems().length > 0) {
+    <div class="cart-content">
+      <!-- Listado de productos -->
+      <div class="cart-items-list">
+        @for (item of cartService.cartItems(); track item.product.id) {
+          <div class="cart-item-card">
+            <div class="item-details">
+              <h3>{{ item.product.title }}</h3>
+              <p class="item-price">Precio unitario: ${{ item.product.price }}</p>
+            </div>
+            
+            <div class="item-controls">
+              <span class="item-quantity">Cantidad: {{ item.quantity }}</span>
+              <button class="btn-delete" (click)="removeItem(item.product.id)">
+                Eliminar
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Resumen del carrito y acciones globales -->
+      <div class="cart-summary">
+        <div class="summary-total">
+          <h3>Total a pagar:</h3>
+          <span class="total-price">${{ cartService.totalPrice() }}</span>
+        </div>
+
+        <div class="summary-actions">
+          <button class="btn-clear" (click)="clearCart()">
+            Vaciar Carrito
+          </button>
+          <button class="btn-checkout">
+            Finalizar Compra
+          </button>
+        </div>
+      </div>
+    </div>
+  } @else {
+    <!-- Estado vacío -->
+    <div class="cart-empty">
+      <p>Tu carrito está vacío actualmente.</p>
+      <a routerLink="/" class="btn-shop">Volver al Catálogo</a>
+    </div>
+  }
+</div>
