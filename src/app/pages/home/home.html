@@ -2,12 +2,16 @@
   <div class="catalog__heading">
     <div>
       <h1 id="catalog-title">Catálogo de productos</h1>
-      @if (!isLoading() && !hasError()) {
-        <p>{{ totalProducts() }} productos disponibles</p>
-      } @else {
+      @if (isLoading() || hasError()) {
         <p>Explorá los productos disponibles</p>
+      } @else if (searchTerm()) {
+        <p>{{ totalProducts() }} resultados para «{{ searchTerm() }}»</p>
+      } @else {
+        <p>{{ totalProducts() }} productos disponibles</p>
       }
     </div>
+
+    <app-search (search)="onSearch($event)" />
   </div>
 
   @if (isLoading()) {
@@ -29,6 +33,11 @@
       <h2>No pudimos cargar los productos</h2>
       <p>Hubo un error al conectar con la API. Intentá de nuevo en unos segundos.</p>
       <button type="button" (click)="retry()">Reintentar</button>
+    </div>
+  } @else if (products().length === 0) {
+    <div class="catalog__empty" aria-live="polite">
+      <h2>No se encontraron productos</h2>
+      <p>No hay resultados para «{{ searchTerm() }}». Probá con otro término.</p>
     </div>
   } @else {
     <div class="catalog__content">
