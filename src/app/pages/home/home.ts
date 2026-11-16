@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject
 import { Subscription } from 'rxjs';
 import { Pagination } from '../../components/products/pagination/pagination';
 import { ProductCard } from '../../components/products/product-card/product-card';
+import { Search } from '../../components/search/search';
 import { Product } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
@@ -10,7 +11,7 @@ import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-home',
-  imports: [ProductCard, Pagination],
+  imports: [ProductCard, Pagination, Search],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './home.html',
   styleUrl: './home.css',
@@ -31,6 +32,7 @@ export class Home implements OnInit, OnDestroy {
   protected readonly totalProducts = signal(0);
   protected readonly isLoading = signal(true);
   protected readonly hasError = signal(false);
+  protected readonly searchTerm = signal('');
   protected readonly pageSize = 20;
 
   protected readonly totalPages = computed(() =>
@@ -65,6 +67,12 @@ export class Home implements OnInit, OnDestroy {
     }
   }
 
+  protected onSearch(term: string): void {
+    this.searchTerm.set(term);
+    this.currentPage.set(1);
+    this.loadProducts();
+  }
+
   protected retry(): void {
     this.loadProducts();
   }
@@ -95,10 +103,12 @@ export class Home implements OnInit, OnDestroy {
     this.requestSubscription?.unsubscribe();
     this.isLoading.set(true);
     this.hasError.set(false);
+    const term = this.searchTerm();
+    const request$ = term
+      ? this.productService.searchProducts(term, this.currentPage(), this.pageSize)
+      : this.productService.getProducts(this.currentPage(), this.pageSize);
 
-    this.requestSubscription = this.productService
-      .getProducts(this.currentPage(), this.pageSize)
-      .subscribe({
+    this.requestSubscription = request$.subscribe({
         next: (response) => {
           this.products.set(response.products);
           this.totalProducts.set(response.total);
