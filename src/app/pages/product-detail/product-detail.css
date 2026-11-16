@@ -1,0 +1,109 @@
+
+:host {
+  display: block;
+  min-height: 100%;
+  background: #f4f6f9;
+  padding: 40px 24px;
+}
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 50px;
+
+  max-width: 1100px;
+  margin: 30px auto;
+  padding: 45px;
+
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+}
+
+/* Imagen */
+.product-detail > img,
+.product-detail .product-image img {
+  width: 100%;
+  max-width: 450px;
+  height: 420px;
+  object-fit: contain;
+  justify-self: center;
+}
+
+/* Información */
+.product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.product-info .category {
+  color: #666;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.product-info h1 {
+  font-size: 30px;
+  color: #252b40;
+  margin: 5px 0;
+}
+
+.product-info .description {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.product-info .rating {
+  color: #e5a000;
+  font-weight: 600;
+}
+
+/* Precio */
+.product-info .price {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.product-info .price h2 {
+  font-size: 30px;
+  color: #303080;
+  margin: 0;
+}
+
+.product-info .price span {
+  background: #e3f8eb;
+  color: #168044;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Stock y marca */
+.product-info p {
+  margin: 4px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-detail {
+    grid-template-columns: 1fr;
+    padding: 25px;
+    gap: 25px;
+  }
+
+  .product-detail > img,
+  .product-detail .product-image img {
+    height: 280px;
+  }
+
+  .product-info h1 {
+    font-size: 24px;
+  }
+}

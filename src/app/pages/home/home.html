@@ -9,7 +9,11 @@
       }
     </div>
   </div>
-
+  @if (cartMessage()) {
+  <div class="cart-notification" role="status">
+    ✓ {{ cartMessage() }}
+  </div>
+}
   @if (isLoading()) {
     <div class="catalog__state" aria-live="polite">
       <p>Cargando productos…</p>
@@ -35,9 +39,9 @@
       <div class="catalog__grid">
         @for (product of products(); track product.id) {
           <app-product-card
-            [product]="product"
-            (addToCart)="logProductId($event)"
-            (viewDetail)="logProductId($event)"
+          [product]="product"
+          (addToCart)="addToCart($event)"
+          (viewDetail)="viewProductDetail($event)"
           />
         }
       </div>
