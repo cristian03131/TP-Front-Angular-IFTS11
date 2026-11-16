@@ -1,3 +1,4 @@
+
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Pagination } from '../../components/products/pagination/pagination';
@@ -5,6 +6,8 @@ import { ProductCard } from '../../components/products/product-card/product-card
 import { Search } from '../../components/search/search';
 import { Product } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
+import { Router } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -14,10 +17,16 @@ import { ProductService } from '../../services/product.service';
   styleUrl: './home.css',
 })
 export class Home implements OnInit, OnDestroy {
+
   private readonly productService = inject(ProductService);
+  private readonly router = inject(Router);
+  private readonly cartService = inject(CartService);
+
   private requestSubscription?: Subscription;
   private shouldScrollToProducts = false;
+  private cartMessageTimeout?: ReturnType<typeof setTimeout>;
 
+  protected readonly cartMessage = signal('');
   protected readonly products = signal<Product[]>([]);
   protected readonly currentPage = signal(1);
   protected readonly totalProducts = signal(0);
@@ -25,6 +34,7 @@ export class Home implements OnInit, OnDestroy {
   protected readonly hasError = signal(false);
   protected readonly searchTerm = signal('');
   protected readonly pageSize = 20;
+
   protected readonly totalPages = computed(() =>
     Math.max(1, Math.ceil(this.totalProducts() / this.pageSize)),
   );
@@ -35,6 +45,10 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.requestSubscription?.unsubscribe();
+
+    if (this.cartMessageTimeout) {
+      clearTimeout(this.cartMessageTimeout);
+    }
   }
 
   protected goToPreviousPage(): void {
@@ -63,8 +77,26 @@ export class Home implements OnInit, OnDestroy {
     this.loadProducts();
   }
 
-  protected logProductId(id: number): void {
-    console.log(id);
+  /// Agregar producto al carrito y mostrar confirmación
+  protected addToCart(product: Product): void {
+    this.cartService.addToCart(product);
+
+    this.cartMessage.set(
+      `¡${product.title} se agregó al carrito correctamente!`
+    );
+
+    if (this.cartMessageTimeout) {
+      clearTimeout(this.cartMessageTimeout);
+    }
+
+    this.cartMessageTimeout = setTimeout(() => {
+      this.cartMessage.set('');
+    }, 3000);
+  }
+
+  // Navegar al detalle del producto
+  protected viewProductDetail(product: Product): void {
+    this.router.navigate(['/products', product.id]);
   }
 
   private loadProducts(): void {
@@ -96,6 +128,7 @@ export class Home implements OnInit, OnDestroy {
     if (!this.shouldScrollToProducts) return;
 
     this.shouldScrollToProducts = false;
+
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });

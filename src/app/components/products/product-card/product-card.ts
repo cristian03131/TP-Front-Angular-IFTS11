@@ -11,14 +11,16 @@ import { Product } from '../../../interfaces/product.interface';
 })
 export class ProductCard {
   readonly product = input.required<Product>();
-  readonly addToCart = output<number>();
-  readonly viewDetail = output<number>();
+
+  // Ahora emitimos el producto completo
+  readonly addToCart = output<Product>();
+  readonly viewDetail = output<Product>();
 
   protected onAddToCart(): void {
-    this.addToCart.emit(this.product().id);
+    this.addToCart.emit(this.product());
   }
 
   protected onViewDetail(): void {
-    this.viewDetail.emit(this.product().id);
+    this.viewDetail.emit(this.product());
   }
 }
