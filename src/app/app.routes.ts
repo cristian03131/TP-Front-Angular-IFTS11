@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { CartComponent } from './pages/cart/cart.component';
 import { ProductDetail } from './pages/product-detail/product-detail';
+import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,7 @@ export const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: ''
+    component: NotFound,
+    title: 'TiendaTP | Página no encontrada',
   }
 ];
