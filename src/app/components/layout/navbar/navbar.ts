@@ -23,7 +23,6 @@ export class Navbar {
   /** Enlaces que se renderizan en la barra de navegación. */
   protected readonly links: readonly NavLink[] = [
     { label: 'Inicio', path: '/' },
-    { label: 'Productos', path: '/products' },
     { label: 'Carrito', path: '/cart' },
     { label: 'Checkout', path: '/checkout' },
   ];
