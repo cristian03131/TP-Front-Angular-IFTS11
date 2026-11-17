@@ -4,6 +4,8 @@ import { switchMap, throwError } from 'rxjs';
 
 import { Product } from '../../interfaces/product.interface';
 import { ProductService } from '../../services/product.service';
+import { CartService } from '../../services/cart.service';
+import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,10 +18,29 @@ export class ProductDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private productService = inject(ProductService);
   private cdr = inject(ChangeDetectorRef);
+  private cartService = inject(CartService);
+  protected readonly cartMessage = signal('');
 
+  private cartMessageTimeout?: ReturnType<typeof setTimeout>;
   product: Product | null = null;
   loading = true;
   errorMessage = '';
+
+  addToCart(): void {
+    if (!this.product) return;
+
+    this.cartService.addToCart(this.product);
+
+    this.cartMessage.set(
+      `¡${this.product.title} se agregó al carrito correctamente!`
+    );
+
+    clearTimeout(this.cartMessageTimeout);
+
+    this.cartMessageTimeout = setTimeout(() => {
+      this.cartMessage.set('');
+    }, 3000);
+  }
 
   ngOnInit(): void {
     this.route.paramMap

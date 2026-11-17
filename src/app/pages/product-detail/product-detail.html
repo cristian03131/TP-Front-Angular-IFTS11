@@ -31,7 +31,7 @@
       </p>
 
       <p class="rating">
-         {{ product.rating }} / 5
+        {{ product.rating }} / 5
       </p>
 
       <div class="price">
@@ -42,6 +42,22 @@
       <p>Stock disponible: {{ product.stock }}</p>
 
       <p>Marca: {{ product.brand }}</p>
+
+      <button
+        type="button"
+        class="add-to-cart-btn"
+        [disabled]="product.stock <= 0"
+        (click)="addToCart()"
+      >
+        {{ product.stock > 0 ? 'Agregar al carrito' : 'Sin stock' }}
+      </button>
+
+      @if (cartMessage()) {
+        <div class="cart-notification" role="status">
+          <span>✓</span>
+          {{ cartMessage() }}
+        </div>
+      }
 
     </div>
   }
