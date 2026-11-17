@@ -1,0 +1,36 @@
+<article class="product-card">
+  <button
+    type="button"
+    class="product-card__image-button"
+    [attr.aria-label]="'Ver detalle de ' + product().title"
+    (click)="onViewDetail()"
+  >
+    <img class="product-card__image" [src]="product().thumbnail" [alt]="product().title" />
+  </button>
+
+  <button type="button" class="product-card__title" (click)="onViewDetail()">
+    {{ product().title }}
+  </button>
+
+  <div class="product-card__info">
+    <span class="product-card__price">{{
+      product().price | currency: 'USD' : 'symbol' : '1.0-0'
+    }}</span>
+    @if (product().stock > 0) {
+      <span class="product-card__stock">Stock: {{ product().stock }}</span>
+    } @else {
+      <span class="product-card__stock product-card__stock--empty">Sin stock</span>
+    }
+  </div>
+
+  <div class="product-card__actions">
+    <button
+      type="button"
+      class="product-card__add"
+      [disabled]="product().stock === 0"
+      (click)="onAddToCart()"
+    >
+      {{ product().stock > 0 ? 'Agregar al carrito' : 'Sin stock' }}
+    </button>
+  </div>
+</article>

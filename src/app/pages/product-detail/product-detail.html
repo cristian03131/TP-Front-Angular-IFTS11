@@ -1,0 +1,65 @@
+
+<div class="product-detail">
+
+  @if (loading) {
+    <p>Cargando producto...</p>
+  }
+
+  @else if (errorMessage) {
+    <p class="error">{{ errorMessage }}</p>
+  }
+
+  @else if (product) {
+
+    <div class="product-image">
+      <img
+        [src]="product.thumbnail"
+        [alt]="product.title"
+      />
+    </div>
+
+    <div class="product-info">
+
+      <span class="category">
+        {{ product.category }}
+      </span>
+
+      <h1>{{ product.title }}</h1>
+
+      <p class="description">
+        {{ product.description }}
+      </p>
+
+      <p class="rating">
+        {{ product.rating }} / 5
+      </p>
+
+      <div class="price">
+        <h2>${{ product.price }}</h2>
+        <span>{{ product.discountPercentage }}% OFF</span>
+      </div>
+
+      <p>Stock disponible: {{ product.stock }}</p>
+
+      <p>Marca: {{ product.brand }}</p>
+
+      <button
+        type="button"
+        class="add-to-cart-btn"
+        [disabled]="product.stock <= 0"
+        (click)="addToCart()"
+      >
+        {{ product.stock > 0 ? 'Agregar al carrito' : 'Sin stock' }}
+      </button>
+
+      @if (cartMessage()) {
+        <div class="cart-notification" role="status">
+          <span>✓</span>
+          {{ cartMessage() }}
+        </div>
+      }
+
+    </div>
+  }
+
+</div>

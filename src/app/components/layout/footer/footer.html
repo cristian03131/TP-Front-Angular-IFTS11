@@ -1,0 +1,11 @@
+<footer class="footer">
+  <span class="footer__brand">{{ brand }}</span>
+
+  <nav class="footer__nav" aria-label="Enlaces del pie de página">
+    @for (link of navLinks; track link.path) {
+      <a class="footer__link" [routerLink]="link.path">{{ link.label }}</a>
+    }
+  </nav>
+
+  <span>© {{ year }} · Todos los derechos reservados</span>
+</footer>
