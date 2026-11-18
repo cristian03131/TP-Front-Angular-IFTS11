@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component, input, Signal, signal } from "@angular/core";
+import { CartItem } from "../../../interfaces/cart-item.interface";
 
 @Component({
     selector:'app-order-summary',
@@ -8,5 +9,5 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
     styleUrl:'./order-summary.css'
 })
 export class OrderSummary{
-
+    cartData = input<CartItem[]>([]);
 }
