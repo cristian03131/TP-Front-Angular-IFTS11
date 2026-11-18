@@ -1,0 +1,47 @@
+<div [formGroup]="formulario" class="card-tarjeta">
+    <h2>Datos de la tarjeta</h2>
+
+    <div class="grid">
+        <div class="campo">
+            <label for="nombreTarjeta">Nombre en la tarjeta</label>
+            <input id="nombreTarjeta" type="text" formControlName="nombreTarjeta" placeholder="Ej: Ana Perez">
+            @if (formulario.controls.nombreTarjeta.touched && formulario.controls.nombreTarjeta.invalid) {
+            <div class="error">Ingresá el nombre que figura en la tarjeta</div>
+            }
+        </div>
+
+        <div class="campo">
+            <label for="numeroTarjeta">Número de tarjeta</label>
+            <input id="numeroTarjeta" type="text" inputmode="numeric" maxlength="16" formControlName="numeroTarjeta"
+                placeholder="16 dígitos sin espacios">
+            @if (formulario.controls.numeroTarjeta.touched && formulario.controls.numeroTarjeta.hasError('required')) {
+            <div class="error">Número requerido</div>
+            }
+            @if (formulario.controls.numeroTarjeta.touched && formulario.controls.numeroTarjeta.hasError('pattern')) {
+            <div class="error">Debe tener 16 dígitos</div>
+            }
+        </div>
+
+        <div class="campo">
+            <label for="vencimiento">Vencimiento</label>
+            <input id="vencimiento" type="text" maxlength="5" formControlName="vencimiento" placeholder="MM/AA">
+            @if (formulario.controls.vencimiento.touched && formulario.controls.vencimiento.hasError('required')) {
+            <div class="error">Vencimiento requerido</div>
+            }
+            @if (formulario.controls.vencimiento.touched && formulario.controls.vencimiento.hasError('pattern')) {
+            <div class="error">Formato MM/AA</div>
+            }
+        </div>
+
+        <div class="campo">
+            <label for="cvv">CVV</label>
+            <input id="cvv" type="password" inputmode="numeric" maxlength="4" formControlName="cvv" placeholder="123">
+            @if (formulario.controls.cvv.touched && formulario.controls.cvv.hasError('required')) {
+            <div class="error">CVV requerido</div>
+            }
+            @if (formulario.controls.cvv.touched && formulario.controls.cvv.hasError('pattern')) {
+            <div class="error">3 o 4 dígitos</div>
+            }
+        </div>
+    </div>
+</div>
