@@ -1,5 +1,57 @@
-.mb-3{
-    background-color:aliceblue;
-    border-radius: 50%;
-    padding: 1%;
+.shipping{
+    background: #fff;
+    border: 1px solid #e3e6ea;
+    border-radius: 12px;
+    padding: 24px 32px;
+}
+
+h2 {
+    margin:1%;
+    font-size: 125%;
+}
+
+.shipping {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px 24px;
+}
+
+.mb-3 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+label {
+    font-weight: 600;
+    font-size: 95%;
+}
+
+input {
+    padding: 12px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f7f7f7;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4a7cff;
+    background: #fff;
+}
+
+input.ng-invalid.ng-touched {
+    border-color: #d93025;
+}
+
+.text-danger {
+    color: #d93025;
+    font-size: 0.8rem;
+}
+
+@media (max-width: 600px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
 }

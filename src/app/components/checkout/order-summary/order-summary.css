@@ -1,0 +1,43 @@
+.card {
+    background: #fff;
+    border: 1px solid #e3e6ea;
+    border-radius: 12px;
+    padding: 24px 32px;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 1.25rem;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+}
+
+.total {
+    font-weight: 700;
+    font-size: 1.2rem;
+    border-top: 1px solid #e3e6ea;
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.btn-confirmar {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    background: #2f5fb3;
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-confirmar:disabled {
+    background: #b8c4d9;
+    cursor: not-allowed;
+}

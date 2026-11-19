@@ -1,1 +1,24 @@
-<h1>Orden de compra </h1>
+<section class="card">
+    <h2>Resumen del pedido</h2>
+
+    @for (item of cartData(); track item.product.id) {
+        <div class="fila">
+            <span>{{ item.quantity }} x {{ item.product.title }}</span>
+            <span>{{ item.product.price * item.quantity | currency }}</span>
+        </div>
+    } @empty {
+        <p>El carrito está vacío.</p>
+    }
+
+    <div class="fila total">
+        <span>Total</span>
+        <span>{{ total() | currency }}</span>
+    </div>
+
+    <button type="button"
+            class="btn-confirmar"
+            [disabled]="deshabilitado()"
+            (click)="confirmar.emit()">
+        Confirmar compra
+    </button>
+</section>
