@@ -1,0 +1,39 @@
+@if (compra(); as compra) {
+  <section class="confirmacion">
+    <span class="badge">Compra simulada exitosa</span>
+    <h1>¡Gracias por tu compra!</h1>
+    <p class="subtitulo">
+      Pedido <strong>N.º {{ numeroPedido() }}</strong>. No se realizó ningún cobro real.
+    </p>
+
+    <dl class="datos">
+      <div class="fila">
+        <dt>Nombre</dt>
+        <dd>{{ compra.cliente.nombre }} {{ compra.cliente.apellido }}</dd>
+      </div>
+      <div class="fila">
+        <dt>Email</dt>
+        <dd>{{ compra.cliente.email }}</dd>
+      </div>
+      <div class="fila">
+        <dt>Envío a</dt>
+        <dd>{{ compra.cliente.domicilio }} {{ compra.cliente.altura }}, {{ compra.cliente.ciudad }}</dd>
+      </div>
+    </dl>
+
+    <div class="items">
+      @for (item of compra.items; track item.product.id) {
+        <div class="fila">
+          <span>{{ item.quantity }} × {{ item.product.title }}</span>
+          <span>{{ item.product.price * item.quantity | currency }}</span>
+        </div>
+      }
+      <div class="fila total">
+        <span>Total</span>
+        <span>{{ compra.total | currency }}</span>
+      </div>
+    </div>
+
+    <a routerLink="/" class="btn-volver">Volver al catálogo</a>
+  </section>
+}

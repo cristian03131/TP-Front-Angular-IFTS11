@@ -1,10 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, signal, viewChild, } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, signal, viewChild } from "@angular/core";
 import { ShippingForm } from "../../components/checkout/shipping-form/shipping-form";
 import { OrderSummary } from "../../components/checkout/order-summary/order-summary";
 import { PaymentForm } from "../../components/checkout/payment-form/payment-form";
-import { LocalStorageService } from "../../services/localstorage.service";
-import { CartItem } from "../../interfaces/cart-item.interface";
 import { CartService } from "../../services/cart.service";
+import { CompraService } from "../../services/compra.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -16,26 +15,14 @@ import { Router } from "@angular/router";
 })
 export class Checkout{
 
-    private localStorageService = inject(LocalStorageService)
     private cartService=inject(CartService)
+    private compraService=inject(CompraService)
     private _router=inject(Router)
     private _shipping=viewChild.required(ShippingForm)
     private _payment=viewChild.required(PaymentForm)
 
-    private cartData = signal<CartItem[]>([])
+    readonly cartData = this.cartService.cartItems
     readonly avisoDeAlerta= signal(false)
-
-    constructor() { 
-        this.initCartData();
-    }
-
-    initCartData(){
-        const localStorageData = this.localStorageService.getITem('cart');
-        if (localStorageData){
-            const data: CartItem[] = JSON.parse(localStorageData);
-            this.cartData.set(data);
-        }
-    }
 
     confirmacionCompra():void{
         const datosEnvio=this._shipping().formulario
@@ -48,7 +35,14 @@ export class Checkout{
             return;
         }
 
+        const items=this.cartData()
+        if(items.length===0){
+            return;
+        }
+
+        // Primero se registra la compra (con los ítems actuales) y recién después se vacía el carrito
+        this.compraService.registrarCompra(datosEnvio.getRawValue(), items, this.cartService.totalPrice());
         this.cartService.clearCart();
-        this._router.navigate(['/products']);
+        this._router.navigate(['/checkout/confirmation']);
     }
 }

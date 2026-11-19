@@ -11,5 +11,5 @@ import { Navbar } from '../navbar/navbar';
 })
 export class Header {
   /** Texto de la marca que se muestra junto al logo. */
-  protected readonly title = 'TP Front Angular';
+  protected readonly title = 'ShopFlow';
 }

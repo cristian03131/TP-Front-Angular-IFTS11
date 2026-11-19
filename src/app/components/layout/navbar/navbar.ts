@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { CartService } from '../../../services/cart.service';
 
 /** Representa un enlace de navegación de la barra. */
 interface NavLink {
@@ -17,6 +18,9 @@ interface NavLink {
   styleUrl: './navbar.css',
 })
 export class Navbar {
+  /** Cantidad total de ítems en el carrito (se muestra como globo sobre "Carrito"). */
+  protected readonly totalItems = inject(CartService).totalItems;
+
   /** Indica si el menú móvil está desplegado. */
   protected readonly isOpen = signal(false);
 
@@ -24,7 +28,6 @@ export class Navbar {
   protected readonly links: readonly NavLink[] = [
     { label: 'Inicio', path: '/' },
     { label: 'Carrito', path: '/cart' },
-    { label: 'Checkout', path: '/checkout' },
   ];
 
   /** Alterna la apertura del menú móvil (abre si está cerrado y viceversa). */

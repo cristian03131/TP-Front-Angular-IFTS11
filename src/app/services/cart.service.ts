@@ -1,5 +1,5 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
-import { Product } from '../interfaces/cart-item.interface';
+import { Product } from '../interfaces/product.interface';
 import { CartItem } from '../interfaces/cart-item.interface';
 import { LocalStorageService } from './localstorage.service';
 
@@ -31,11 +31,30 @@ export class CartService {
   }
 
   public initCart() {
-    const localStorageData = this.localStorageService.getITem('cart');
-    if (localStorageData){
-      const data = JSON.parse(localStorageData);
-      this.cartItemsSignal.set(data);
+    const localStorageData = this.localStorageService.getItem('cart');
+    if (!localStorageData) return;
+
+    try {
+      const data: unknown = JSON.parse(localStorageData);
+      if (Array.isArray(data)) {
+        this.cartItemsSignal.set(data.filter(item => this.isCartItem(item)));
+      }
+    } catch {
+      // Datos corruptos en localStorage: se ignoran y se arranca con carrito vacío
     }
+  }
+
+  // Verifica que un valor recuperado de localStorage tenga la forma de un CartItem
+  private isCartItem(value: unknown): value is CartItem {
+    if (typeof value !== 'object' || value === null) return false;
+    const { product, quantity } = value as Partial<CartItem>;
+    return (
+      typeof product === 'object' && product !== null &&
+      typeof product.id === 'number' &&
+      typeof product.title === 'string' &&
+      typeof product.price === 'number' &&
+      typeof quantity === 'number' && Number.isInteger(quantity) && quantity > 0
+    );
   }
 
   // Método para agregar un producto al carrito
@@ -51,24 +70,23 @@ export class CartService {
         quantity: updatedItems[existingIndex].quantity + 1
       };
       this.cartItemsSignal.set(updatedItems);
-      console.log(updatedItems);
     } else {
       // Si no existe, lo agregamos con cantidad 1
       this.cartItemsSignal.set([...currentItems, { product, quantity: 1 }]);
     }
-    this.localStorageService.setITem("cart", JSON.stringify(this.cartItemsSignal()));
+    this.localStorageService.setItem("cart", JSON.stringify(this.cartItemsSignal()));
   }
 
   // Método para eliminar un producto por completo del carrito
   public removeFromCart(productId: number): void {
     const filteredItems = this.cartItemsSignal().filter(item => item.product.id !== productId);
     this.cartItemsSignal.set(filteredItems);
-    this.localStorageService.setITem("cart", JSON.stringify(this.cartItemsSignal()));
+    this.localStorageService.setItem("cart", JSON.stringify(this.cartItemsSignal()));
   }
 
   // Método para vaciar el carrito por completo
   public clearCart(): void {
     this.cartItemsSignal.set([]);
-    this.localStorageService.setITem("cart", JSON.stringify(this.cartItemsSignal()));
+    this.localStorageService.setItem("cart", JSON.stringify(this.cartItemsSignal()));
   }
 }

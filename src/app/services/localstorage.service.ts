@@ -1,14 +1,14 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService {
 
-  setITem(key: string, value: string){
+  setItem(key: string, value: string){
     localStorage.setItem(key, value);
   }
-  getITem(key: string): string|null{
+  getItem(key: string): string|null{
     return localStorage.getItem(key);
   }
 }

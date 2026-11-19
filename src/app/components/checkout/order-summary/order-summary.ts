@@ -10,9 +10,6 @@ import { CurrencyPipe } from "@angular/common";
     styleUrl: './order-summary.css'
 })
 export class OrderSummary {
-    items() {
-        throw new Error('Method not implemented.');
-    }
     cartData = input<CartItem[]>([]);
     readonly deshabilitado = input(false)
     readonly confirmar = output<void>()
