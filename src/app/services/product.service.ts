@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Product } from '../interfaces/product.interface';
 import { ProductsResponse } from '../interfaces/products-response.interface';
 
@@ -21,32 +21,19 @@ export class ProductService {
       .pipe(catchError(this.handleError));
   }
 
-  /**
-   * Devuelve los productos cuyo título contiene el texto buscado (sin distinguir
-   * mayúsculas).
-  */
+  /** Busca productos en la API (paginado en el servidor con `limit` y `skip`). */
   searchProducts(query: string, page = 1, limit = 20): Observable<ProductsResponse> {
     const currentPage = this.toPositiveInteger(page, 1);
     const productsPerPage = this.toPositiveInteger(limit, 20);
     const skip = (currentPage - 1) * productsPerPage;
-    const term = query.trim().toLowerCase();
-    const params = new HttpParams().set('q', term).set('limit', 0);
+    const params = new HttpParams()
+      .set('q', query.trim())
+      .set('limit', productsPerPage)
+      .set('skip', skip);
 
-    return this.http.get<ProductsResponse>(`${this.productsUrl}/search`, { params }).pipe(
-      catchError(this.handleError),
-      map(({ products }) => {
-        const matches = products.filter((product) =>
-          product.title.toLowerCase().includes(term),
-        );
-
-        return {
-          products: matches.slice(skip, skip + productsPerPage),
-          total: matches.length,
-          skip,
-          limit: productsPerPage,
-        };
-      }),
-    );
+    return this.http
+      .get<ProductsResponse>(`${this.productsUrl}/search`, { params })
+      .pipe(catchError(this.handleError));
   }
 
   getProductById(id: number): Observable<Product> {

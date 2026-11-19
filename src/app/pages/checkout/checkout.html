@@ -1,15 +1,17 @@
-<div class="container">
-    <div class="checkout">
+<div class="checkout-page">
+    <div class="checkout-forms">
         @if (avisoDeAlerta() && (datosEnvio.formulario.invalid || datosPago.formulario.invalid)) {
-                <div class="aviso-error">Revisá los campos marcados para continuar.</div>
-            }
-            <app-shipping-form #datosEnvio/>
-            <app-payment-form #datosPago/>    
+            <div class="aviso-error">Revisá los campos marcados para continuar.</div>
+        }
+        <app-shipping-form #datosEnvio/>
+        <app-payment-form #datosPago/>
     </div>
+
+    <aside class="checkout-summary">
+        <app-order-summary
+            [cartData]="cartData()"
+            [deshabilitado]="cartData().length === 0"
+            (confirmar)="confirmacionCompra()"
+        ></app-order-summary>
+    </aside>
 </div>
-
-<app-order-summary
-[cartData]="cartData()"
-(confirmar)="confirmacionCompra()"
-></app-order-summary>
-

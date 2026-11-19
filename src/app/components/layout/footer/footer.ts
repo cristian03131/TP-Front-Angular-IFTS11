@@ -25,7 +25,7 @@ interface FooterLink {
 })
 export class Footer {
   /** Nombre de la marca que se muestra en el pie. */
-  protected readonly brand = 'TP Front Angular';
+  protected readonly brand = 'ShopFlow';
 
   /** Año actual, usado en el aviso de derechos. */
   protected readonly year = new Date().getFullYear();
@@ -33,8 +33,6 @@ export class Footer {
   /** Enlaces de navegación del pie. */
   protected readonly navLinks: readonly FooterLink[] = [
     { label: 'Inicio', path: '/' },
-    { label: 'Productos', path: '/products' },
     { label: 'Carrito', path: '/cart' },
-    { label: 'Checkout', path: '/checkout' },
   ];
 }

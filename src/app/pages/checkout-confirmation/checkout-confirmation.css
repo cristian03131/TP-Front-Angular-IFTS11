@@ -1,0 +1,74 @@
+.confirmacion {
+    max-width: 520px;
+    margin: 32px auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e3e6ea;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #e6f4ea;
+    color: #1e7e34;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+h1 {
+    margin: 16px 0 8px;
+    font-size: 1.75rem;
+}
+
+.subtitulo {
+    margin: 0 0 24px;
+    color: #5f6b7a;
+}
+
+.datos,
+.items {
+    margin: 0;
+    padding: 16px 0;
+    border-top: 1px solid #e3e6ea;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    text-align: left;
+}
+
+dt {
+    color: #5f6b7a;
+}
+
+dd {
+    margin: 0;
+    text-align: right;
+}
+
+.total {
+    margin-top: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.btn-volver {
+    display: block;
+    margin-top: 8px;
+    padding: 14px;
+    border-radius: 8px;
+    background: #2f5fb3;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-volver:hover {
+    background: #274e96;
+}

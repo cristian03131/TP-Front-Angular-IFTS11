@@ -55,3 +55,7 @@ input.ng-invalid.ng-touched {
         grid-template-columns: 1fr;
     }
 }
+
+h2 {
+    grid-column: 1 / -1;
+}

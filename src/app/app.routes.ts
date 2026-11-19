@@ -3,18 +3,19 @@ import { Home } from './pages/home/home';
 import { CartComponent } from './pages/cart/cart.component';
 import { ProductDetail } from './pages/product-detail/product-detail';
 import { Checkout } from './pages/checkout/checkout';
+import { CheckoutConfirmation } from './pages/checkout-confirmation/checkout-confirmation';
 import { NotFound } from './pages/not-found/not-found';
 
 export const routes: Routes = [
   {
     path: '',
     component: Home,
-    title: 'TiendaTP | Catálogo de productos',
+    title: 'ShopFlow | Catálogo de productos',
   },
   {
     path: 'cart',
     component: CartComponent,
-    title: 'TiendaTP | Carrito de Compras'
+    title: 'ShopFlow | Carrito de Compras'
   },
   {
     path: 'products/:id',
@@ -25,8 +26,13 @@ export const routes: Routes = [
     component:Checkout
   },
   {
+    path: 'checkout/confirmation',
+    component: CheckoutConfirmation,
+    title: 'ShopFlow | Compra confirmada',
+  },
+  {
     path: '**',
     component: NotFound,
-    title: 'TiendaTP | Página no encontrada',
+    title: 'ShopFlow | Página no encontrada',
   }
 ];
